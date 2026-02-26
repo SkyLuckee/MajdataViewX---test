@@ -24,7 +24,7 @@ public class TImeDisplayer : MonoBehaviour
         var timenowInt = (int)ctime;
         var minute = timenowInt / 60;
         var second = timenowInt - 60 * minute;
-        double mili = (ctime - timenowInt) * 10000;
+        double mili = (ctime - timenowInt) * 1000;
 
         // Make timing display "cleaner" on negative timing.
         if (ctime < 0)
@@ -32,11 +32,11 @@ public class TImeDisplayer : MonoBehaviour
             minute = Math.Abs(minute);
             second = Math.Abs(second);
             mili = Math.Abs(mili);
-            text.text = string.Format("-{0}:{1:00}.{2:000}", minute, second, mili / 10);
+            text.text = string.Format("-{0}:{1:00}.{2:000}", minute, second, mili);
         }
         else
         {
-            text.text = string.Format("{0}:{1:00}.{2:0000}", minute, second, mili);
+            text.text = string.Format(" {0}:{1:00}.{2:0000}", minute, second, mili);
         }
     }
 }
