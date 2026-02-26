@@ -22,8 +22,8 @@ public class ToggleFullScreen : MonoBehaviour
         var resolutions = Screen.resolutions;
         if (Screen.fullScreen)
         {
-            var width = 300;
-            var height = 300;
+            var width = 689;
+            var height = 689;
             Screen.SetResolution(width, height, false);
         }
         else
