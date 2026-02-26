@@ -589,7 +589,7 @@ public class ObjectCounter : MonoBehaviour
         );
 
         rate.text = string.Format(
-            "FiNALE  Rate:\n" +
+            "FiNALE Rate:\n" +
             "{0:000.00}   %\n" +
             "DELUXE Rate:\n" +
             "{1:000.0000} % ",
