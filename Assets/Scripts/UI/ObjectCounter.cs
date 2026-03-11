@@ -579,22 +579,24 @@ public class ObjectCounter : MonoBehaviour
             "SLIDE: {2} / {7}\n" +
             "TOUCH: {3} / {8}\n" +
             "BREAK: {4} / {9}\n" +
-            "ALL:   {10} / {11}\n" +
-            "MOD:   {12}",
+            "ALL:   {10}\n" +
+            "MOD:   {11}",
             tapCount, holdCount, slideCount, touchCount, breakCount,
             tapSum, holdSum, slideSum, touchSum, breakSum,
-            comboN,
+            //comboN,
             tapSum + holdSum + slideSum + touchSum + breakSum,
             InputManager.Mode
         );
 
         rate.text = string.Format(
-            "FiNALE Rate:\n" +
-            "{0:000.00}   %\n" +
+            //"FiNALE Rate:\n" +
+            //"{0:000.00}   %\n" +
             "DELUXE Rate:\n" +
-            "{1:000.0000} % ",
-            Math.Truncate((float)FiNowScore() / FiSumScore() * 10000) / 100,
-            Math.Truncate(((float)DxNowScore() / DxSumScore() * 100 + BreakRate()) * 10000) / 10000
+            "{0:000.0000} % \n"+
+            "Combo: {1}",
+            //Math.Truncate((float)FiNowScore() / FiSumScore() * 10000) / 100,
+            Math.Truncate(((float)DxNowScore() / DxSumScore() * 100 + BreakRate()) * 10000) / 10000,
+            comboN
         );
     }
 
