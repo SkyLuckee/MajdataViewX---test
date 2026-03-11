@@ -11517,13 +11517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'FiNALE Rate:
-
-    000.00   %
-
-    DELUXE Rate:
-
-    000.0000 %'
+  m_Text: "DELUXE Rate:\n000.0000 %\n\nCombo:\t0"
 --- !u!222 &1846285907
 CanvasRenderer:
   m_ObjectHideFlags: 0
