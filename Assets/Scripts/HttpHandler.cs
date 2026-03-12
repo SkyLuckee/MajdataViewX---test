@@ -72,7 +72,6 @@ public class HttpHandler : MonoBehaviour
                     loader.smoothSlideAnime = data.smoothSlideAnime;
                     objectCounter.ComboSetActive(data.comboStatusType);
                     loader.LoadJson(File.ReadAllText(data.jsonPath), data.startTime);
-                    GameObject.Find("Notes").GetComponent<PlayAllPerfect>().enabled = false;
                     GameObject.Find("MultTouchHandler").GetComponent<MultTouchHandler>().clearSlots();
 
                     bgManager.LoadBGFromPath(new FileInfo(data.jsonPath).DirectoryName, data.audioSpeed);
@@ -90,7 +89,6 @@ public class HttpHandler : MonoBehaviour
                     loader.smoothSlideAnime = data.smoothSlideAnime;
                     objectCounter.ComboSetActive(data.comboStatusType);
                     loader.LoadJson(File.ReadAllText(data.jsonPath), data.startTime);
-                    GameObject.Find("Notes").GetComponent<PlayAllPerfect>().enabled = false;
                     multTouchHandler.clearSlots();
 
                     screenRecorder.CutoffTime = getChartLength();
