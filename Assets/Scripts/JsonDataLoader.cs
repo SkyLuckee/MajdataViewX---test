@@ -772,7 +772,7 @@ public class JsonDataLoader : MonoBehaviour
             catch (Exception e)
             {
                 GameObject.Find("ErrText").GetComponent<Text>().text =
-                    "在第" + (timing.RawTextPositionY + 1) + "行发现问题：\n" + e.Message;
+                    "在第" + (timing.RawTextPositionY + 1) + "行发现问题/Problem(s) at line " + (timing.RawTextPositionY + 1) + ":\n" + e.Message;
                 UnityEngine.Debug.LogError(e);
             }
         }
@@ -1087,7 +1087,7 @@ public class JsonDataLoader : MonoBehaviour
             if (note.RawContent.Contains('w')) //wifi
             {
                 if (isConn)
-                    throw new InvalidOperationException("不允许Wifi Slide作为Connection Slide的一部分");
+                    throw new InvalidOperationException("不允许Wifi Slide作为Connection Slide的一部分\nWIFI SLIDE CANT BE IN SLIDE CHAIN");
                 InstantiateWifi(timing, subSlide[i]);
             }
             else
@@ -1445,7 +1445,7 @@ public class JsonDataLoader : MonoBehaviour
             var startPos = int.Parse(digits[0]);
             var endPos = int.Parse(digits[1]);
             endPos = getRelativeEndPos(startPos, endPos);
-            if (endPos < 3 || endPos > 7) throw new Exception("-星星至少隔开一键\n-スライドエラー");
+            if (endPos < 3 || endPos > 7) throw new Exception("-星星至少隔开一键\n-スライドエラー\n-START AND END MUST BE \u2267 1 SENSOR APART");
             return "line" + endPos;
         }
 
@@ -1493,7 +1493,7 @@ public class JsonDataLoader : MonoBehaviour
 
             if (endPos == 1 || endPos == 5)
             {
-                throw new Exception("^星星不合法\n^スライドエラー");
+                throw new Exception("^星星不合法\n^スライドエラー\nINVALID ^ SLIDE");
             }
 
             if (endPos < 5)
@@ -1514,7 +1514,7 @@ public class JsonDataLoader : MonoBehaviour
             var startPos = int.Parse(digits[0]);
             var endPos = int.Parse(digits[1]);
             endPos = getRelativeEndPos(startPos, endPos);
-            if (endPos == 5) throw new Exception("v星星不合法\nvスライドエラー");
+            if (endPos == 5) throw new Exception("v星星不合法\nvスライドエラー\nINVALID v SLIDE");
             return "v" + endPos;
         }
 
@@ -1572,7 +1572,7 @@ public class JsonDataLoader : MonoBehaviour
             var startPos = int.Parse(digits[0]);
             var endPos = int.Parse(digits[1]);
             endPos = getRelativeEndPos(startPos, endPos);
-            if (endPos != 5) throw new Exception("s星星尾部错误\nsスライドエラー");
+            if (endPos != 5) throw new Exception("s星星尾部错误\nsスライドエラー\nINVALID s END POINT");
             return "s";
         }
 
@@ -1584,7 +1584,7 @@ public class JsonDataLoader : MonoBehaviour
             var startPos = int.Parse(digits[0]);
             var endPos = int.Parse(digits[1]);
             endPos = getRelativeEndPos(startPos, endPos);
-            if (endPos != 5) throw new Exception("z星星尾部错误\nzスライドエラー");
+            if (endPos != 5) throw new Exception("z星星尾部错误\nzスライドエラー\nINVALID z END POINT");
             return "-s";
         }
 
@@ -1601,17 +1601,17 @@ public class JsonDataLoader : MonoBehaviour
             endPos = getRelativeEndPos(startPos, endPos);
             if (turnPos == 7)
             {
-                if (endPos < 2 || endPos > 5) throw new Exception("V星星终点不合法\nVスライドエラー");
+                if (endPos < 2 || endPos > 5) throw new Exception("V星星终点不合法\nVスライドエラー\nINVALID V END POINT");
                 return "L" + endPos;
             }
 
             if (turnPos == 3)
             {
-                if (endPos < 5) throw new Exception("V星星终点不合法\nVスライドエラー");
+                if (endPos < 5) throw new Exception("V星星终点不合法\nVスライドエラー\nINVALID V END POINT");
                 return "-L" + MirrorKeys(endPos);
             }
 
-            throw new Exception("V星星拐点只能隔开一键\nVスライドエラー");
+            throw new Exception("V星星拐点只能隔开一键\nVスライドエラー\nV REFLECTION POINT MUST BE 1 SENSOR AWAY FROM START");
         }
 
         if (content.Contains('w'))
@@ -1622,7 +1622,7 @@ public class JsonDataLoader : MonoBehaviour
             var startPos = int.Parse(digits[0]);
             var endPos = int.Parse(digits[1]);
             endPos = getRelativeEndPos(startPos, endPos);
-            if (endPos != 5) throw new Exception("w星星尾部错误\nwスライドエラー");
+            if (endPos != 5) throw new Exception("w星星尾部错误\nwスライドエラー\nINVALID w END POINT");
             return "wifi";
         }
 
