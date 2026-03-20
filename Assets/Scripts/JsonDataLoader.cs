@@ -473,7 +473,14 @@ public class JsonDataLoader : MonoBehaviour
                 if (jsonLoaderTask is null || !jsonLoaderTask.IsCompleted)
                     return;
                 loadedData = jsonLoaderTask.Result;
-                diffText.text = loadedData.difficulty;
+                if (loadedData.difficulty == "ORIGINAL")
+                {
+                    diffText.text = "U\u00B7TA\u00B7GE";
+                }
+                else
+                {
+                    diffText.text = loadedData.difficulty;
+                }
                 levelText.text = loadedData.level;
                 titleText.text = loadedData.title;
                 artistText.text = loadedData.artist;
