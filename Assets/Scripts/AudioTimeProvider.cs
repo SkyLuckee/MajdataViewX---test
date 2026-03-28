@@ -61,7 +61,7 @@ public class AudioTimeProvider : MonoBehaviour
         isRecord = _isRecord;
         if (_isRecord)
         {
-            startTime = Time.time + 5;
+            startTime = Time.time + 5 + 60*4 / firstBpm;
             Time.timeScale = _speed;
             Time.captureFramerate = 60;
         }
