@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
-// using System.Collections.Generic;
-// using System.Linq;
-// using MajSimai;
+using System.Collections.Generic;
+using System.Linq;
+using MajSimai;
 
 public class AudioTimeProvider : MonoBehaviour
 {
@@ -35,33 +35,37 @@ public class AudioTimeProvider : MonoBehaviour
         return _audioTime / 16.6667f;
     }
 
-    // optional field to keep the extracted BPM if you want it later
-    // public float FirstBpm { get; private set; } = -1f;
-
-    // Old 3-argument call compatibility
-    // public void SetStartTime(long _ticks, float _offset, float _speed)
-    // {
-    //     SetStartTime(_ticks, _offset, _speed, (IEnumerable<SimaiTimingPoint>)null, false);
-    // }
-
-    // Old 4-argument call where the 4th argument is the record flag
-    // public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord)
-    // {
-    //     SetStartTime(_ticks, _offset, _speed, (IEnumerable<SimaiTimingPoint>)null, _isRecord);
-    // }
-
-    public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false) //IEnumerable<SimaiTimingPoint> timings
+    public float GetCurrentBpm(List<SimaiTimingPoint> timings)
     {
-        // float firstBpm = timings?.FirstOrDefault()?.Bpm ?? -1f;
+    if (timings == null || timings.Count == 0) return -1f;
+    var tp = timings.LastOrDefault(t => t.Timing <= AudioTime);
+    return tp?.Bpm > 0f ? tp.Bpm : -1f;
+    }
+
+
+    public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false)
+    {
         ticks = _ticks;
         offset = _offset;
         AudioTime = offset;
         var dateTime = new DateTime(ticks);
         var seconds = (dateTime - DateTime.Now).TotalSeconds;
         isRecord = _isRecord;
+
+        var loader = GameObject.Find("DataLoader").GetComponent<JsonDataLoader>();
+        float bpm = GetCurrentBpm(loader.Timings);
         if (_isRecord)
         {
-            startTime = Time.time + 5; //+ 60*4 / firstBpm;
+            if (bpm > 0f)
+            {
+                float secondsPerBeat = 60f / bpm;
+                startTime = Time.time + 5f + 4f * secondsPerBeat;
+            }
+            else
+            {
+                startTime = Time.time + 5f;
+            }
+
             Time.timeScale = _speed;
             Time.captureFramerate = 60;
         }

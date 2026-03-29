@@ -41,6 +41,7 @@ public class JsonDataLoader : MonoBehaviour
     NoteManager noteManager;
     Task<Majson> jsonLoaderTask = null;
     Majson loadedData = null;
+    public List<SimaiTimingPoint> Timings { get; private set; } = new();
     float ignoreOffset = 0;
     Coroutine noteParserTask = null;
     Dictionary<int, int> noteIndex = new();
@@ -496,6 +497,9 @@ public class JsonDataLoader : MonoBehaviour
                 if (jsonLoaderTask is null || !jsonLoaderTask.IsCompleted)
                     return;
                 loadedData = jsonLoaderTask.Result;
+                // Extract timing points from loadedData
+                Timings = loadedData. timingList ?? new List<SimaiTimingPoint>();
+
                 diffText.text = loadedData.difficulty;
                 levelText.text = loadedData.level;
                 titleText.text = loadedData.title;
