@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using MajSimai;
+using UnityEngine.UI;
 
 public class AudioTimeProvider : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class AudioTimeProvider : MonoBehaviour
 
     private float startTime;
     private long ticks;
+    public float CurrentBpm { get; private set; }
 
     public float CurrentSpeed => isRecord ? Time.timeScale : speed;
 
@@ -26,6 +28,9 @@ public class AudioTimeProvider : MonoBehaviour
                 AudioTime = Time.time - startTime + offset;
             else
                 AudioTime = (Time.realtimeSinceStartup - startTime) * speed + offset;
+            // Update BPM live
+            var loader = GameObject.Find("DataLoader").GetComponent<JsonDataLoader>();
+            CurrentBpm = GetCurrentBpm(loader.Timings);
         }
     }
     public float GetFrame()
@@ -37,9 +42,14 @@ public class AudioTimeProvider : MonoBehaviour
 
     public float GetCurrentBpm(List<SimaiTimingPoint> timings)
     {
-    if (timings == null || timings.Count == 0) return -1f;
-    var tp = timings.LastOrDefault(t => t.Timing <= AudioTime);
-    return tp?.Bpm > 0f ? tp.Bpm : -1f;
+        if (timings == null || timings.Count == 0) return -1f;
+
+        // If AudioTime is 0 or before the first timing point, use the first BPM
+        if (AudioTime <= timings[0].Timing)
+            return timings[0].Bpm;
+
+        var tp = timings.LastOrDefault(t => t.Timing <= AudioTime);
+        return tp?.Bpm > 0f ? tp.Bpm : -1f;
     }
 
 
@@ -59,11 +69,13 @@ public class AudioTimeProvider : MonoBehaviour
             if (bpm > 0f)
             {
                 float secondsPerBeat = 60f / bpm;
-                startTime = Time.time + 5f + 4f * secondsPerBeat;
+                startTime = Time.time + 4f * secondsPerBeat;
+                GameObject.Find("ErrText").GetComponent<Text>().text = $"Current BPM: {bpm}";
             }
             else
             {
                 startTime = Time.time + 5f;
+                GameObject.Find("ErrText").GetComponent<Text>().text = "Current BPM not found";
             }
 
             Time.timeScale = _speed;
@@ -74,6 +86,7 @@ public class AudioTimeProvider : MonoBehaviour
             startTime = Time.realtimeSinceStartup + (float)seconds;
             speed = _speed;
             Time.captureFramerate = 0;
+            GameObject.Find("ErrText").GetComponent<Text>().text = $"Current BPM (not recorded): {bpm}";
         }
 
         isStart = true;

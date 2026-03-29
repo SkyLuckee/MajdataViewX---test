@@ -65,12 +65,12 @@ public class HttpHandler : MonoBehaviour
                     break;
                 case EditorControlMethod.OpStart:
                     {
+                        loader.LoadJson(File.ReadAllText(data.jsonPath), data.startTime);
                         timeProvider.SetStartTime(data.startAt, data.startTime, data.audioSpeed);
                         loader.noteSpeed = (float)(107.25 / (71.4184491 * Mathf.Pow(data.noteSpeed + 0.9975f, -0.985558604f)));
                         loader.touchSpeed = data.touchSpeed;
                         loader.smoothSlideAnime = data.smoothSlideAnime;
                         objectCounter.ComboSetActive(data.comboStatusType);
-                        loader.LoadJson(File.ReadAllText(data.jsonPath), data.startTime);
                         GameObject.Find("MultTouchHandler").GetComponent<MultTouchHandler>().clearSlots();
 
                         bgManager.LoadBGFromPath(new FileInfo(data.jsonPath).DirectoryName, data.audioSpeed);
@@ -82,12 +82,12 @@ public class HttpHandler : MonoBehaviour
                 case EditorControlMethod.Record:
                     {
                         var maidataPath = new FileInfo(data.jsonPath).DirectoryName;
+                        loader.LoadJson(File.ReadAllText(data.jsonPath), data.startTime);
                         timeProvider.SetStartTime(data.startAt, data.startTime, data.audioSpeed, true);
                         loader.noteSpeed = (float)(107.25 / (71.4184491 * Mathf.Pow(data.noteSpeed + 0.9975f, -0.985558604f)));
                         loader.touchSpeed = data.touchSpeed;
                         loader.smoothSlideAnime = data.smoothSlideAnime;
                         objectCounter.ComboSetActive(data.comboStatusType);
-                        loader.LoadJson(File.ReadAllText(data.jsonPath), data.startTime);
                         multTouchHandler.clearSlots();
 
                         screenRecorder.CutoffTime = getChartLength();

@@ -498,7 +498,9 @@ public class JsonDataLoader : MonoBehaviour
                     return;
                 loadedData = jsonLoaderTask.Result;
                 // Extract timing points from loadedData
-                Timings = loadedData. timingList ?? new List<SimaiTimingPoint>();
+                Timings = loadedData.timingList ?? new List<SimaiTimingPoint>();
+                var timeProvider = GameObject.Find("AudioTimeProvider").GetComponent<AudioTimeProvider>();
+                float bpm = timeProvider.GetCurrentBpm(Timings);
 
                 diffText.text = loadedData.difficulty;
                 levelText.text = loadedData.level;
