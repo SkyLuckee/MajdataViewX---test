@@ -5665,7 +5665,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e330574b8b2e3fb48b915214d9946961, type: 3}
+    m_Font: {fileID: 12800000, guid: e8536e8d3046900439bb3f49c931976b, type: 3}
     m_FontSize: 3
     m_FontStyle: 0
     m_BestFit: 0
@@ -11143,7 +11143,17 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "TAP:\t0\nHOLD:\t0\nSLIDE:\t0\nTOUCH:\t0\nBREAK:\t0\n"
+  m_Text: 'TAP:   0
+
+    HOLD:  0
+
+    SLIDE: 0
+
+    TOUCH: 0
+
+    BREAK: 0
+
+'
 --- !u!222 &1555395488
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13078,8 +13088,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 86.8, y: -2.1}
-  m_SizeDelta: {x: 60.79, y: 24.79}
+  m_AnchoredPosition: {x: 86.7, y: -3.9}
+  m_SizeDelta: {x: 60.79, y: 31.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1846285906
 MonoBehaviour:
@@ -13114,7 +13124,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "DELUXE Rate:\n000.0000 %\n\nCombo:\t0"
+  m_Text: 'DELUXE Rate:
+
+    000.0000 %
+
+
+    Combo: 0'
 --- !u!222 &1846285907
 CanvasRenderer:
   m_ObjectHideFlags: 0
