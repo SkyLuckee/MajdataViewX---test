@@ -2875,7 +2875,6 @@ MonoBehaviour:
   artistTextM: {fileID: 1871693363}
   designTextM: {fileID: 777904906}
   bpmTextM: {fileID: 875503751}
-  bpmTextUI: {fileID: 1054705960}
   cardImageM: {fileID: 570799603}
   LvBackgroundM: {fileID: 71540078}
   cardImagesM:
@@ -6010,7 +6009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &786270578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7733,7 +7732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1054705959
 RectTransform:
   m_ObjectHideFlags: 0
