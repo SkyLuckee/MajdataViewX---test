@@ -60,6 +60,7 @@ public class JsonDataLoader : MonoBehaviour
     public Text artistTextM;
     public Text designTextM;
     public Text bpmTextM;
+    public Text bpmTextUI;
     public SpriteRenderer cardImageM;
     public SpriteRenderer LvBackgroundM;
     // public SpriteRenderer[] TabM = new SpriteRenderer[2];
@@ -546,6 +547,12 @@ public class JsonDataLoader : MonoBehaviour
 
                 QuestionM.SetActive(loadedData.level.EndsWith('?'));
                 loadedData.level = loadedData.level.Replace("?", "");
+
+                if (loadedData.timingList.Count > 0)
+                {
+                    bpmTextUI.text = Math.Truncate(loadedData.timingList[loadedData.timingList.Count - 1].Bpm).ToString();
+                }
+
 
                 CountNoteSum(loadedData);
                 var lastNoteTime = loadedData.timingList.Count > 0 ? loadedData.timingList.Last().Timing : 0d;

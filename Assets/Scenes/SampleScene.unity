@@ -2875,7 +2875,7 @@ MonoBehaviour:
   artistTextM: {fileID: 1871693363}
   designTextM: {fileID: 777904906}
   bpmTextM: {fileID: 875503751}
-  bpmText: {fileID: 786270579}
+  bpmTextUI: {fileID: 1054705960}
   cardImageM: {fileID: 570799603}
   LvBackgroundM: {fileID: 71540078}
   cardImagesM:
@@ -6005,7 +6005,7 @@ GameObject:
   - component: {fileID: 786270580}
   - component: {fileID: 786270579}
   m_Layer: 5
-  m_Name: objBPM
+  m_Name: bpmTextUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
