@@ -16,6 +16,17 @@ public class AudioTimeProvider : MonoBehaviour
     public void SetInitialBpm(float bpm)
     {
         InitialBpm = bpm;
+        if (isRecord && isStart)
+        {
+            var now = Time.time;
+            // Re-align future start using new BPM; adjust only if start is still in the future
+            if (startTime > now)
+            {
+                var remaining = startTime - now;
+                // Replace the planned “4-beat” delay with one that uses the new BPM
+                startTime = now + 5 + 240f / InitialBpm;
+            }
+        }
     }
 
     public float CurrentSpeed => isRecord ? Time.timeScale : speed;
@@ -38,19 +49,19 @@ public class AudioTimeProvider : MonoBehaviour
         return _audioTime / 16.6667f;
     }
 
-    public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false,float bpm = 120f)
+    public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false)
     {
         ticks = _ticks;
         offset = _offset;
         AudioTime = offset;
-        InitialBpm = bpm;
+        var bpm = InitialBpm;
         var dateTime = new DateTime(ticks);
         var seconds = (dateTime - DateTime.Now).TotalSeconds;
         isRecord = _isRecord;
         if (_isRecord)
         {
             GameObject.Find("ErrText").GetComponent<Text>().text= ($"StartTime calculation: Time.time={Time.time}, InitialBpm={InitialBpm}, delay={240f/InitialBpm}");
-            startTime = Time.time + 5 + 240/InitialBpm;
+            startTime = Time.time + 5 + 240f/bpm;
             Time.timeScale = _speed;
             Time.captureFramerate = 60;
         }
