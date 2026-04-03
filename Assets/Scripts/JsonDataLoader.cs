@@ -503,6 +503,11 @@ public class JsonDataLoader : MonoBehaviour
                 artistText.text = loadedData.artist;
                 designText.text = loadedData.designer;
                 cardImage.color = diffColors[loadedData.diffNum];
+                if (loadedData != null && loadedData.timingList.Count > 0)
+                {
+                    var timeProvider = GameObject.Find("AudioTimeProvider").GetComponent<AudioTimeProvider>();
+                    timeProvider.SetInitialBpm(loadedData.timingList[0].Bpm);
+                }
 
                 //新：乌蒙的UI
                 levelTextM.spriteAsset.spriteSheet = MLevelsM[loadedData.diffNum];
