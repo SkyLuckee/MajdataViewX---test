@@ -19,6 +19,7 @@ public class JsonDataLoader : MonoBehaviour
 {
     public float noteSpeed = 7f;
     public float touchSpeed = 7.5f;
+    public float currentBpm = 0f;
     public bool smoothSlideAnime = false;
     public Sprite starEach;
     public GameObject tapPrefab;
@@ -58,7 +59,7 @@ public class JsonDataLoader : MonoBehaviour
     public Text titleTextM;
     public Text artistTextM;
     public Text designTextM;
-    // public Text bpmTextM;
+    public Text bpmTextM;
     public SpriteRenderer cardImageM;
     public SpriteRenderer LvBackgroundM;
     // public SpriteRenderer[] TabM = new SpriteRenderer[2];
@@ -539,7 +540,7 @@ public class JsonDataLoader : MonoBehaviour
                 titleTextM.text = loadedData.title;
                 artistTextM.text = loadedData.artist;
                 designTextM.text = loadedData.designer;
-                // bpmTextM.text = "BPM " + loadedData.wholebpm;
+                bpmTextM.text = "BPM " + loadedData.timingList[0].Bpm;
                 cardImageM.sprite = cardImagesM[loadedData.diffNum];
                 LvBackgroundM.sprite = LvBackgroundsM[loadedData.diffNum];
 
