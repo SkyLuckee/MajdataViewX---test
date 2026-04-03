@@ -65,7 +65,7 @@ public class HttpHandler : MonoBehaviour
                     break;
                 case EditorControlMethod.OpStart:
                     {
-                        timeProvider.SetStartTime(data.startAt, data.startTime, data.audioSpeed);
+                        timeProvider.SetStartTime(data.startAt, data.startTime, data.audioSpeed, false, bpm: -1f, true);
                         loader.noteSpeed = (float)(107.25 / (71.4184491 * Mathf.Pow(data.noteSpeed + 0.9975f, -0.985558604f)));
                         loader.touchSpeed = data.touchSpeed;
                         loader.smoothSlideAnime = data.smoothSlideAnime;
@@ -82,7 +82,7 @@ public class HttpHandler : MonoBehaviour
                 case EditorControlMethod.Record:
                     {
                         var maidataPath = new FileInfo(data.jsonPath).DirectoryName;
-                        timeProvider.SetStartTime(data.startAt, data.startTime, data.audioSpeed, true);
+                        timeProvider.SetStartTime(data.startAt, data.startTime, data.audioSpeed, true, bpm: -1f, true);
                         loader.noteSpeed = (float)(107.25 / (71.4184491 * Mathf.Pow(data.noteSpeed + 0.9975f, -0.985558604f)));
                         loader.touchSpeed = data.touchSpeed;
                         loader.smoothSlideAnime = data.smoothSlideAnime;

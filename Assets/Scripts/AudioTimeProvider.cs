@@ -16,11 +16,21 @@ public class AudioTimeProvider : MonoBehaviour
     public void SetInitialBpm(float bpm)
     {
         InitialBpm = bpm;
-        if (isRecord && isStart && Time.time < startTime)
+        if (isStart && useClockCount)
         {
-            startTime = Time.time + 5f + 240f / InitialBpm;
+            if (isRecord)
+            {
+                if (Time.time < startTime)
+                startTime = Time.time + 5f + 240f / InitialBpm;
+            }
+            else
+            {
+                if (Time.realtimeSinceStartup < startTime)
+                startTime = Time.realtimeSinceStartup + 5f + 240f / InitialBpm;
+            }
         }
     }
+    private bool useClockCount;
 
     public float CurrentSpeed => isRecord ? Time.timeScale : speed;
 
@@ -42,7 +52,7 @@ public class AudioTimeProvider : MonoBehaviour
         return _audioTime / 16.6667f;
     }
 
-    public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false, float bpm = -1f)
+    public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false, float bpm = -1f, bool _useClockCount = false)
     {
         ticks = _ticks;
         offset = _offset;
@@ -52,17 +62,25 @@ public class AudioTimeProvider : MonoBehaviour
         var dateTime = new DateTime(ticks);
         var seconds = (dateTime - DateTime.Now).TotalSeconds;
         isRecord = _isRecord;
-        if (_isRecord)
+        useClockCount = isRecord || _useClockCount;
+        if (useClockCount)
         {
-            GameObject.Find("ErrText").GetComponent<Text>().text= ($"StartTime calculation: Time.time={Time.time}, InitialBpm={InitialBpm}, delay={240f/InitialBpm}");
-            startTime = Time.time + 5 + 240f/InitialBpm;
-            Time.timeScale = _speed;
-            Time.captureFramerate = 60;
+            if (isRecord)
+            {
+                startTime = Time.time + 5f + 240f / InitialBpm;
+                Time.timeScale = _speed;
+                Time.captureFramerate = 60;
+            }
+            else
+            {
+                startTime = Time.realtimeSinceStartup + 5f + 240f / InitialBpm;
+                speed = _speed;
+                Time.captureFramerate = 0;
+            }
         }
         else
         {
             startTime = Time.realtimeSinceStartup + (float)seconds;
-            GameObject.Find("ErrText").GetComponent<Text>().text= ($"StartTime calculation: Time.time={Time.time}, InitialBpm={InitialBpm}, delay={240f/InitialBpm}");
             speed = _speed;
             Time.captureFramerate = 0;
         }
