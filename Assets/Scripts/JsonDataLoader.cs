@@ -19,7 +19,7 @@ public class JsonDataLoader : MonoBehaviour
 {
     public float noteSpeed = 7f;
     public float touchSpeed = 7.5f;
-    public float firstBpm = 0f;
+    public float currentBpm = 0f;
     public bool smoothSlideAnime = false;
     public Sprite starEach;
     public GameObject tapPrefab;
@@ -60,6 +60,7 @@ public class JsonDataLoader : MonoBehaviour
     public Text artistTextM;
     public Text designTextM;
     public Text bpmTextM;
+    public Text bpmText;
     public SpriteRenderer cardImageM;
     public SpriteRenderer LvBackgroundM;
     // public SpriteRenderer[] TabM = new SpriteRenderer[2];
@@ -479,6 +480,25 @@ public class JsonDataLoader : MonoBehaviour
             }
         }
     };
+    // Helper method to get BPM at current time
+    private float GetCurrentBpm(float currentTime, List<SimaiTimingPoint> timingList)
+    {
+        float bpm = timingList[0].Bpm;
+
+        foreach (var tp in timingList)
+        {
+            if (tp.Timing <= currentTime)
+            {
+                bpm = tp.Bpm; // update to latest BPM before current time
+            }
+            else
+            {
+                break;
+            }
+        }
+    
+        return bpm;
+    }
     // Start is called before the first frame update
     private void Start()
     {
@@ -486,6 +506,7 @@ public class JsonDataLoader : MonoBehaviour
         ObjectCounter = GameObject.Find("ObjectCounter").GetComponent<ObjectCounter>();
         customSkin = GameObject.Find("Outline").GetComponent<CustomSkin>();
         noteManager = GameObject.Find("Notes").GetComponent<NoteManager>();
+        bpmText = GameObject.Find("objBPM").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -503,9 +524,12 @@ public class JsonDataLoader : MonoBehaviour
                 artistText.text = loadedData.artist;
                 designText.text = loadedData.designer;
                 cardImage.color = diffColors[loadedData.diffNum];
-                if (loadedData.timingList.Count > 0)
+                if (loadedData != null && loadedData.timingList.Count > 0)
                     {
-                        firstBpm = loadedData.timingList[0].Bpm;
+                        var timeProvider = GameObject.Find("AudioTimeProvider").GetComponent<AudioTimeProvider>();
+                        float currentTime = timeProvider.AudioTime;
+                        currentBpm = GetCurrentBpm(currentTime, loadedData.timingList);
+                        bpmText.text = currentBpm.ToString();
                     }
 
                 //新：乌蒙的UI
@@ -544,7 +568,7 @@ public class JsonDataLoader : MonoBehaviour
                 titleTextM.text = loadedData.title;
                 artistTextM.text = loadedData.artist;
                 designTextM.text = loadedData.designer;
-                bpmTextM.text = "BPM " + firstBpm;
+                bpmTextM.text = "BPM " + loadedData.timingList[0].Bpm;
                 cardImageM.sprite = cardImagesM[loadedData.diffNum];
                 LvBackgroundM.sprite = LvBackgroundsM[loadedData.diffNum];
 
