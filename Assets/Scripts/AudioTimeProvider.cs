@@ -31,6 +31,7 @@ public class AudioTimeProvider : MonoBehaviour
 
         return _audioTime / 16.6667f;
     }
+
     public void SetStartTime(long _ticks, float _offset, float _speed, bool _isRecord = false)
     {
         ticks = _ticks;
