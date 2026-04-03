@@ -60,7 +60,6 @@ public class JsonDataLoader : MonoBehaviour
     public Text artistTextM;
     public Text designTextM;
     public Text bpmTextM;
-    public Text bpmText;
     public SpriteRenderer cardImageM;
     public SpriteRenderer LvBackgroundM;
     // public SpriteRenderer[] TabM = new SpriteRenderer[2];
@@ -480,25 +479,6 @@ public class JsonDataLoader : MonoBehaviour
             }
         }
     };
-    // Helper method to get BPM at current time
-    private float GetCurrentBpm(float currentTime, List<SimaiTimingPoint> timingList)
-    {
-        float bpm = timingList[0].Bpm;
-
-        foreach (var tp in timingList)
-        {
-            if (tp.Timing <= currentTime)
-            {
-                bpm = tp.Bpm; // update to latest BPM before current time
-            }
-            else
-            {
-                break;
-            }
-        }
-    
-        return bpm;
-    }
     // Start is called before the first frame update
     private void Start()
     {
@@ -506,7 +486,6 @@ public class JsonDataLoader : MonoBehaviour
         ObjectCounter = GameObject.Find("ObjectCounter").GetComponent<ObjectCounter>();
         customSkin = GameObject.Find("Outline").GetComponent<CustomSkin>();
         noteManager = GameObject.Find("Notes").GetComponent<NoteManager>();
-        bpmText = GameObject.Find("objBPM").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -524,13 +503,6 @@ public class JsonDataLoader : MonoBehaviour
                 artistText.text = loadedData.artist;
                 designText.text = loadedData.designer;
                 cardImage.color = diffColors[loadedData.diffNum];
-                if (loadedData != null && loadedData.timingList.Count > 0)
-                    {
-                        var timeProvider = GameObject.Find("AudioTimeProvider").GetComponent<AudioTimeProvider>();
-                        float currentTime = timeProvider.AudioTime;
-                        currentBpm = GetCurrentBpm(currentTime, loadedData.timingList);
-                        bpmText.text = currentBpm.ToString();
-                    }
 
                 //新：乌蒙的UI
                 levelTextM.spriteAsset.spriteSheet = MLevelsM[loadedData.diffNum];
