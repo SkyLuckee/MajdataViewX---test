@@ -19,7 +19,6 @@ public class JsonDataLoader : MonoBehaviour
 {
     public float noteSpeed = 7f;
     public float touchSpeed = 7.5f;
-    public float currentBpm = 0f;
     public bool smoothSlideAnime = false;
     public Sprite starEach;
     public GameObject tapPrefab;
