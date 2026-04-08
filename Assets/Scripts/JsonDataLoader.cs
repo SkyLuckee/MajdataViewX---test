@@ -479,6 +479,10 @@ public class JsonDataLoader : MonoBehaviour
             }
         }
     };
+    public IEnumerable<SimaiTimingPoint> GetTimingList()
+    {
+        return loadedData?.timingList;
+    }
     // Start is called before the first frame update
     private void Start()
     {
